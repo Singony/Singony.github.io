@@ -1,0 +1,68 @@
+body { min-height: 100vh; }
+.container {
+    display:grid;
+    grid-template-columns: 0.2fr 0.8fr;
+    height: 100vh;
+    max-width: 1500px;
+  }
+  
+  #columna1 {
+  background-color: #cc99cc;
+}
+  
+  #columna2 {
+  background-image: url(FotoFondoContenido.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  text-align: center;
+  }
+
+  #columna1, #columna2 {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+   }
+   
+   #fotodeperfil {
+    display: flex;
+    border: 10px;
+    text-align: center;
+   }
+   
+   .Info{
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    display: none;
+   }  
+#contacto{
+    text-align: left;
+    display: flex;
+     }
+   
+.menu{
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  position: fixed;
+  }
+
+  h1{
+    size: 6px;
+    color: black;
+    font-family:'Montserrat', sans-serif;
+}
+  h2{
+    size: 5px;
+    color: black;
+    font-family:'Montserrat', sans-serif;
+  }
+  h3{
+    size: 4px;
+  color: black;
+  font-family:'Montserrat', sans-serif;
+  }
+  p{
+    size:3px;
+    color: black;
+    font-family:'Montserrat', sans-serif;
+  }
