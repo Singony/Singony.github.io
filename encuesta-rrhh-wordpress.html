@@ -59,6 +59,10 @@
 #wlq .wl-field>label{font-size:12px;font-weight:800}
 #wlq .wl-field input:not([type=checkbox]),#wlq .wl-field select,#wlq .wl-field textarea{width:100%;border:1.5px solid var(--b);border-radius:12px;padding:13px;font:500 14px Montserrat,Arial,sans-serif;color:var(--n);background:#fff;height:auto}
 #wlq .wl-field textarea{min-height:85px}
+#wlq .wl-field select{-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer;padding-right:44px;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23F97316' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px 18px}
+#wlq .wl-field select::-ms-expand{display:none}
+#wlq .wl-field select:hover,#wlq .wl-field select:focus,#wlq .wl-field input:not([type=checkbox]):focus,#wlq .wl-field textarea:focus{border-color:var(--o);outline:none}
+#wlq .wl-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 #wlq .wl-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #wlq .wl-check{border:1px solid var(--b);border-radius:10px;padding:10px;font-size:12px;font-weight:500}
 #wlq .wl-err{color:#b42318;font-size:12px;font-weight:700}
@@ -106,7 +110,7 @@
 <div class="wl-field"><label>¿Tienen Plan Anual de Capacitación? *</label><select id="wl-annualPlan" required><option value="">Seleccionar</option><option>No</option><option>Acciones, pero no un plan formal</option><option>Sí, basado principalmente en pedidos</option><option>Sí, con diagnóstico, prioridades, cronograma y presupuesto</option><option>Sí, y además medimos resultados</option></select></div>
 <div class="wl-field wl-full"><label>¿Cuál es hoy el principal desafío de capacitación o desarrollo?</label><textarea id="wl-challenge" maxlength="500" placeholder="Ej.: priorizar necesidades, desarrollar mandos medios, justificar presupuesto, medir resultados..."></textarea></div>
 <div class="wl-field"><label>Nombre y apellido</label><input id="wl-person"></div><div class="wl-field"><label>Email o teléfono</label><input id="wl-contact"></div>
-<div class="wl-field wl-full"><label class="wl-check"><input type="checkbox" id="wl-followup"> Me interesa que Wit Lab me contacte para conversar sobre este diagnóstico.</label><div class="wl-micro">Los datos de contexto no modifican tu resultado. El contacto comercial sólo se habilita si marcás esta opción.</div><div id="wl-perr" class="wl-err"></div></div>
+<div class="wl-field wl-full"><label class="wl-check"><input type="checkbox" id="wl-followup"> Me interesa que Wit Lab me contacte para conversar sobre este diagnóstico.</label><div class="wl-micro">Los datos de contexto no modifican tu resultado. El contacto comercial sólo se habilita si marcás esta opción.</div><div class="wl-micro">Al ver tu resultado, tus respuestas se envían a Wit Lab para analizar el diagnóstico.</div><div id="wl-perr" class="wl-err"></div><div class="wl-hp" aria-hidden="true"><input id="wl-website" tabindex="-1" autocomplete="off"></div></div>
 </div><div class="wl-nav"><button type="button" class="wl-btn wl-ghost" id="wl-pback">← Volver</button><button class="wl-btn wl-primary" type="submit">Ver mi resultado →</button></div></form>
 </div></section>
 
@@ -126,6 +130,8 @@
 (function(){
 var root=document.getElementById("wlq");if(!root)return;
 function $(x){return document.getElementById("wl-"+x)}
+/* Envío por email: requiere el snippet PHP "wl_encuesta" en WordPress (manda a evs@witlab.com.ar) */
+var AJAX_URL="/wp-admin/admin-ajax.php";
 var stages=[
 {name:"1 · Leer el negocio",items:[
 {scene:"Situación 01 · Arranca la planificación anual",q:"Dirección comparte los objetivos del próximo año. ¿Qué pasa después en RRHH?",ctx:"Por ejemplo: crecer, mejorar productividad, abrir una unidad, reducir errores o profesionalizar mandos.",a:["Esperamos que aparezcan pedidos de capacitación durante el año.","Preguntamos a los líderes qué cursos creen que necesitarán.","Traducimos los objetivos en capacidades y comportamientos que los equipos deberán fortalecer.","Además de traducirlos en capacidades, dejamos registradas prioridades y evidencias para revisarlas durante el año."]},
@@ -162,10 +168,14 @@ else{title="Tenés un método integrado de capacitación.";desc="El proceso cone
 $("title").textContent=title;$("desc").textContent=desc;$("badge").textContent="Nivel de estructuración · "+total+"%";$("summary").textContent="Este resultado no mide cuánto sabés de RRHH. Muestra cuán disponible y consistente está hoy el método que usás para pasar de una necesidad del negocio a una decisión de formación y a un plan gestionable.";
 $("bars").innerHTML=scores.map(function(x){return '<div class="wl-row"><div class="wl-lab"><span>'+x.name+'</span><span>'+x.pct+'%</span></div><div class="wl-bar"><i style="width:'+x.pct+'%"></i></div></div>'}).join("");
 var lows=scores.slice().sort(function(a,b){return a.pct-b.pct}).slice(0,2),advice={"Leer el negocio":"Formalizá cómo traducís objetivos y cambios del negocio en capacidades requeridas.","Detectar la brecha real":"Definí fuentes de evidencia y un criterio para distinguir brechas formativas de otros problemas de desempeño.","Convertir diagnóstico en plan":"Usá una estructura única que conecte prioridad, objetivo, población, intervención, responsable, cronograma, presupuesto e indicador.","Gestionar y aprender":"Definí antes de cada acción qué evidencia mostrará aprendizaje, aplicación y resultado."};
-$("calls").innerHTML=lows.map(function(x,k){return '<div class="wl-call"><strong>'+(k===0?"Prioridad 1":"Prioridad 2")+' · '+x.name+'</strong>'+advice[x.name]+'</div>'}).join("");page("result")}
+$("calls").innerHTML=lows.map(function(x,k){return '<div class="wl-call"><strong>'+(k===0?"Prioridad 1":"Prioridad 2")+' · '+x.name+'</strong>'+advice[x.name]+'</div>'}).join("");page("result");
+return{total:total,nivel:title,etapas:scores,prioridades:lows.map(function(x){return x.name})}}
+function send(d,r){try{var payload={empresa:d.company,rol:d.role,rubro:d.sector,personas:d.size,capacitaciones:d.types,resultados_previos:d.past,plan_anual:d.plan,desafio:d.challenge,nombre:d.person,contacto:d.contact,quiere_contacto:d.followup,puntaje:r.total,nivel:r.nivel,etapas:r.etapas,prioridades:r.prioridades,respuestas:flat.map(function(x,j){return{pregunta:x.scene+" — "+x.q,respuesta:ans[j]===null?"":String.fromCharCode(65+ans[j])+") "+x.a[ans[j]]}})};
+var fd=new FormData();fd.append("action","wl_encuesta");fd.append("website",$("website").value);fd.append("data",JSON.stringify(payload));
+fetch(AJAX_URL,{method:"POST",body:fd,credentials:"same-origin"}).catch(function(){})}catch(e){}}
 function pdata(){return{company:$("company").value.trim(),role:$("role").value,sector:$("sector").value,size:$("size").value,types:[].slice.call(root.querySelectorAll("#wl-types input:checked")).map(function(x){return x.value}),past:$("pastResults").value,plan:$("annualPlan").value,challenge:$("challenge").value.trim(),person:$("person").value.trim(),contact:$("contact").value.trim(),followup:$("followup").checked}}
 function safe(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-$("profileForm").addEventListener("submit",function(e){e.preventDefault();var d=pdata();if(!d.company||!d.role||!d.sector||!d.size||!d.past||!d.plan||!d.types.length){$("perr").textContent="Completá los campos obligatorios y seleccioná al menos un tipo de capacitación.";return}$("perr").textContent="";$("commercial").innerHTML="<strong>Contexto declarado</strong><br>"+safe(d.company)+" · "+safe(d.sector)+" · "+safe(d.size)+" personas<br><strong>Capacitación reciente:</strong> "+safe(d.types.join(", "))+"<br><strong>Resultados:</strong> "+safe(d.past)+" · <strong>Plan actual:</strong> "+safe(d.plan)+(d.challenge?"<br><strong>Desafío:</strong> "+safe(d.challenge):"");result()});
+$("profileForm").addEventListener("submit",function(e){e.preventDefault();var d=pdata();if(!d.company||!d.role||!d.sector||!d.size||!d.past||!d.plan||!d.types.length){$("perr").textContent="Completá los campos obligatorios y seleccioná al menos un tipo de capacitación.";return}$("perr").textContent="";$("commercial").innerHTML="<strong>Contexto declarado</strong><br>"+safe(d.company)+" · "+safe(d.sector)+" · "+safe(d.size)+" personas<br><strong>Capacitación reciente:</strong> "+safe(d.types.join(", "))+"<br><strong>Resultados:</strong> "+safe(d.past)+" · <strong>Plan actual:</strong> "+safe(d.plan)+(d.challenge?"<br><strong>Desafío:</strong> "+safe(d.challenge):"");send(d,result())});
 $("pback").addEventListener("click",function(){i=flat.length-1;page("quiz");render()});
 $("start").addEventListener("click",function(){i=0;page("quiz");render()});
 $("back").addEventListener("click",function(){if(i){i--;render()}else page("intro")});
