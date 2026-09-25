@@ -130,8 +130,8 @@
 (function(){
 var root=document.getElementById("wlq");if(!root)return;
 function $(x){return document.getElementById("wl-"+x)}
-/* Envío por email: requiere el snippet PHP "wl_encuesta" en WordPress (manda a evs@witlab.com.ar) */
-var AJAX_URL="/wp-admin/admin-ajax.php";
+/* Envío por email vía FormSubmit (mismo servicio que la encuesta que ya funciona) */
+var MAIL_URL="https://formsubmit.co/ajax/evs@witlab.com.ar";
 var stages=[
 {name:"1 · Leer el negocio",items:[
 {scene:"Situación 01 · Arranca la planificación anual",q:"Dirección comparte los objetivos del próximo año. ¿Qué pasa después en RRHH?",ctx:"Por ejemplo: crecer, mejorar productividad, abrir una unidad, reducir errores o profesionalizar mandos.",a:["Esperamos que aparezcan pedidos de capacitación durante el año.","Preguntamos a los líderes qué cursos creen que necesitarán.","Traducimos los objetivos en capacidades y comportamientos que los equipos deberán fortalecer.","Además de traducirlos en capacidades, dejamos registradas prioridades y evidencias para revisarlas durante el año."]},
@@ -170,9 +170,13 @@ $("bars").innerHTML=scores.map(function(x){return '<div class="wl-row"><div clas
 var lows=scores.slice().sort(function(a,b){return a.pct-b.pct}).slice(0,2),advice={"Leer el negocio":"Formalizá cómo traducís objetivos y cambios del negocio en capacidades requeridas.","Detectar la brecha real":"Definí fuentes de evidencia y un criterio para distinguir brechas formativas de otros problemas de desempeño.","Convertir diagnóstico en plan":"Usá una estructura única que conecte prioridad, objetivo, población, intervención, responsable, cronograma, presupuesto e indicador.","Gestionar y aprender":"Definí antes de cada acción qué evidencia mostrará aprendizaje, aplicación y resultado."};
 $("calls").innerHTML=lows.map(function(x,k){return '<div class="wl-call"><strong>'+(k===0?"Prioridad 1":"Prioridad 2")+' · '+x.name+'</strong>'+advice[x.name]+'</div>'}).join("");page("result");
 return{total:total,nivel:title,etapas:scores,prioridades:lows.map(function(x){return x.name})}}
-function send(d,r){try{var payload={empresa:d.company,rol:d.role,rubro:d.sector,personas:d.size,capacitaciones:d.types,resultados_previos:d.past,plan_anual:d.plan,desafio:d.challenge,nombre:d.person,contacto:d.contact,quiere_contacto:d.followup,puntaje:r.total,nivel:r.nivel,etapas:r.etapas,prioridades:r.prioridades,respuestas:flat.map(function(x,j){return{pregunta:x.scene+" — "+x.q,respuesta:ans[j]===null?"":String.fromCharCode(65+ans[j])+") "+x.a[ans[j]]}})};
-var fd=new FormData();fd.append("action","wl_encuesta");fd.append("website",$("website").value);fd.append("data",JSON.stringify(payload));
-fetch(AJAX_URL,{method:"POST",body:fd,credentials:"same-origin"}).catch(function(){})}catch(e){}}
+function send(d,r){try{var fd=new FormData(),hp=$("website").value;
+fd.append("_subject",(d.followup?"[QUIERE CONTACTO] ":"")+"Chequeo RRHH: "+d.company+" ("+r.total+"%)");fd.append("_template","table");fd.append("_captcha","false");if(hp)fd.append("_honey",hp);
+if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.contact))fd.append("_replyto",d.contact);
+fd.append("Empresa",d.company);fd.append("Nombre",d.person||"-");fd.append("Contacto",d.contact||"-");fd.append("Quiere contacto",d.followup?"Sí":"No");fd.append("Rol",d.role);fd.append("Rubro",d.sector);fd.append("Personas",d.size);fd.append("Capacitaciones",d.types.join(", "));fd.append("Resultados observados",d.past);fd.append("Plan anual",d.plan);fd.append("Desafío",d.challenge||"-");
+fd.append("Puntaje total",r.total+"%");fd.append("Nivel",r.nivel);r.etapas.forEach(function(x){fd.append("Etapa: "+x.name,x.pct+"%")});fd.append("Prioridades",r.prioridades.join(" / "));
+flat.forEach(function(x,j){fd.append("P"+(j<9?"0":"")+(j+1)+" "+x.q,ans[j]===null?"-":String.fromCharCode(65+ans[j])+") "+x.a[ans[j]])});
+fetch(MAIL_URL,{method:"POST",headers:{"Accept":"application/json"},body:fd}).catch(function(){})}catch(e){}}
 function pdata(){return{company:$("company").value.trim(),role:$("role").value,sector:$("sector").value,size:$("size").value,types:[].slice.call(root.querySelectorAll("#wl-types input:checked")).map(function(x){return x.value}),past:$("pastResults").value,plan:$("annualPlan").value,challenge:$("challenge").value.trim(),person:$("person").value.trim(),contact:$("contact").value.trim(),followup:$("followup").checked}}
 function safe(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 $("profileForm").addEventListener("submit",function(e){e.preventDefault();var d=pdata();if(!d.company||!d.role||!d.sector||!d.size||!d.past||!d.plan||!d.types.length){$("perr").textContent="Completá los campos obligatorios y seleccioná al menos un tipo de capacitación.";return}$("perr").textContent="";$("commercial").innerHTML="<strong>Contexto declarado</strong><br>"+safe(d.company)+" · "+safe(d.sector)+" · "+safe(d.size)+" personas<br><strong>Capacitación reciente:</strong> "+safe(d.types.join(", "))+"<br><strong>Resultados:</strong> "+safe(d.past)+" · <strong>Plan actual:</strong> "+safe(d.plan)+(d.challenge?"<br><strong>Desafío:</strong> "+safe(d.challenge):"");send(d,result())});
