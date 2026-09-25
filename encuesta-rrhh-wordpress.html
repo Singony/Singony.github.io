@@ -1,0 +1,177 @@
+<!--
+  Chequeo de método RRHH · Wit Lab Capacitación
+  VERSIÓN PARA PEGAR DENTRO DE UNA PÁGINA DE WORDPRESS (widget HTML de Elementor o bloque "HTML personalizado").
+
+  Cambios respecto del original:
+  - Sin <html>, <head> ni <body>: la página de WordPress ya los tiene.
+  - Todo el CSS está encerrado dentro de #wlq, así no toca el body, h1, .page, .nav, .logo, etc. del tema.
+    (El original tenía ".page{display:none}" y WordPress pone class="page" en el <body> => ocultaba TODA la página.)
+  - Clases e IDs con prefijo "wl-" para que no choquen con el tema ni con Elementor.
+  - JavaScript encerrado en una función (sin variables globales como $ o i).
+  - Al imprimir/guardar PDF se oculta el resto del sitio y sólo sale el resultado.
+
+  LOGO: reemplazá URL_DEL_LOGO por la URL del logo subido a Medios de WordPress
+  (o pegá ahí el texto "data:image/png;base64,..." del archivo original).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+#wlq{--o:#F97316;--n:#111B45;--m:#68708a;--b:#e7e9f1;--bg:#f6f7fa;--p:#fff4ea;--g:#17845b;background:var(--bg);font-family:Montserrat,Arial,sans-serif;color:var(--n);text-align:left;line-height:1.4}
+#wlq *,#wlq *::before,#wlq *::after{box-sizing:border-box}
+#wlq h1,#wlq h2,#wlq h3,#wlq p{font-family:inherit;color:inherit;text-transform:none;letter-spacing:normal}
+#wlq .wl-app{max-width:850px;margin:auto;padding:24px 16px 50px}
+#wlq .wl-shell{background:#fff;border:1px solid var(--b);border-radius:24px;overflow:hidden;box-shadow:0 15px 45px #111b4510}
+#wlq .wl-head{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--b)}
+#wlq .wl-logo{width:225px;max-width:55%;height:auto}
+#wlq .wl-ey{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--o);text-transform:uppercase}
+#wlq .wl-page{display:none}#wlq .wl-page.wl-on{display:block}
+#wlq .wl-intro{padding:42px 38px;background:linear-gradient(135deg,#fff 65%,#fff5ed)}
+#wlq h1{font-size:42px;line-height:1.07;letter-spacing:-.04em;margin:9px 0 16px;font-weight:800}#wlq h1 span{color:var(--o)}
+#wlq .wl-lead{max-width:690px;line-height:1.65;color:var(--m);margin:0}
+#wlq .wl-pills{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}#wlq .wl-pill{font-size:12px;font-weight:700;border:1px solid #ffd4b5;border-radius:999px;padding:8px 12px}
+#wlq .wl-btn{border:0;border-radius:999px;padding:14px 22px;font:700 14px Montserrat,Arial,sans-serif;cursor:pointer;text-transform:none;letter-spacing:normal;box-shadow:none;line-height:1.2}
+#wlq .wl-primary{background:var(--o);color:#fff}#wlq .wl-ghost{background:#eff1f6;color:var(--n)}
+#wlq .wl-quiz{padding:28px 38px 38px}
+#wlq .wl-topline{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--m);gap:15px}
+#wlq .wl-track{height:7px;background:#eef0f5;border-radius:99px;margin:12px 0 26px;overflow:hidden}#wlq .wl-fill{height:100%;background:var(--o);transition:.2s}
+#wlq .wl-scene{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--o);font-weight:800}
+#wlq .wl-q{font-size:25px;line-height:1.35;margin:10px 0 20px;font-weight:700}
+#wlq .wl-context{background:#f7f8fb;border-left:3px solid var(--o);padding:13px 15px;border-radius:8px;font-size:13px;line-height:1.55;color:var(--m);margin-bottom:18px}
+#wlq .wl-opts{display:grid;gap:10px}
+#wlq .wl-opt{display:flex;gap:13px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--b);border-radius:14px;padding:15px 16px;font:500 14px/1.45 Montserrat,Arial,sans-serif;color:var(--n);cursor:pointer;white-space:normal;text-transform:none;letter-spacing:normal}
+#wlq .wl-opt:hover,#wlq .wl-opt.wl-sel{border-color:var(--o);background:var(--p);color:var(--n)}
+#wlq .wl-letter{min-width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#f0f2f7;color:var(--m);font-weight:800}
+#wlq .wl-opt.wl-sel .wl-letter{background:var(--o);color:#fff}
+#wlq .wl-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
+#wlq .wl-micro{font-size:11px;color:var(--m)}
+#wlq .wl-rh{background:var(--n);color:#fff;padding:30px 38px}#wlq .wl-rh h2{font-size:32px;margin:7px 0;color:#fff}#wlq .wl-rh p{color:#dfe3f4;line-height:1.6}
+#wlq .wl-results{padding:28px 38px}
+#wlq .wl-status{display:inline-block;background:var(--p);color:var(--o);font-size:12px;font-weight:800;padding:8px 12px;border-radius:99px}
+#wlq .wl-summary{font-size:15px;line-height:1.65;margin:18px 0}
+#wlq .wl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#wlq .wl-card{border:1px solid var(--b);border-radius:16px;padding:18px}#wlq .wl-card h3{font-size:15px;margin:0 0 12px}
+#wlq .wl-row{margin:13px 0}#wlq .wl-lab{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:700;margin-bottom:6px}
+#wlq .wl-bar{height:7px;background:#edf0f5;border-radius:99px;overflow:hidden}#wlq .wl-bar i{display:block;height:100%;background:var(--o)}
+#wlq .wl-call{border-left:4px solid var(--o);background:#fafafd;border-radius:9px;padding:14px 15px;margin:10px 0;font-size:13px;line-height:1.55}#wlq .wl-call strong{display:block;margin-bottom:3px}
+#wlq .wl-cta{background:linear-gradient(135deg,var(--o),#ff8c3d);color:#fff;border-radius:18px;padding:22px;margin-top:18px}#wlq .wl-cta h3{font-size:21px;margin:0 0 7px;color:#fff}#wlq .wl-cta p{font-size:13px;line-height:1.6;margin:0;color:#fff}
+#wlq .wl-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+#wlq .wl-foot{text-align:center;color:#9297aa;font-size:10px;padding:16px}
+#wlq .wl-profile{padding:30px 38px 38px}#wlq .wl-profile h2{font-size:29px;margin:8px 0}#wlq .wl-profile p{color:var(--m);line-height:1.6}
+#wlq .wl-formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#wlq .wl-field{display:flex;flex-direction:column;gap:7px}#wlq .wl-full{grid-column:1/-1}
+#wlq .wl-field>label{font-size:12px;font-weight:800}
+#wlq .wl-field input:not([type=checkbox]),#wlq .wl-field select,#wlq .wl-field textarea{width:100%;border:1.5px solid var(--b);border-radius:12px;padding:13px;font:500 14px Montserrat,Arial,sans-serif;color:var(--n);background:#fff;height:auto}
+#wlq .wl-field textarea{min-height:85px}
+#wlq .wl-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#wlq .wl-check{border:1px solid var(--b);border-radius:10px;padding:10px;font-size:12px;font-weight:500}
+#wlq .wl-err{color:#b42318;font-size:12px;font-weight:700}
+#wlq .wl-commercial{margin-top:18px;border-top:1px solid var(--b);padding-top:14px;font-size:12px;line-height:1.6}
+@media(max-width:620px){#wlq .wl-intro,#wlq .wl-quiz,#wlq .wl-results,#wlq .wl-rh{padding-left:21px;padding-right:21px}#wlq h1{font-size:33px}#wlq .wl-q{font-size:21px}#wlq .wl-grid{grid-template-columns:1fr}#wlq .wl-head{padding:17px 20px}#wlq .wl-profile{padding:24px 21px}#wlq .wl-formgrid,#wlq .wl-checks{grid-template-columns:1fr}#wlq .wl-full{grid-column:auto}}
+@media print{
+  body *{visibility:hidden!important}
+  #wlq,#wlq *{visibility:visible!important}
+  #wlq{position:absolute;left:0;top:0;width:100%;background:#fff}
+  #wlq .wl-app{padding:0;max-width:none}#wlq .wl-shell{box-shadow:none;border:0}
+  #wlq .wl-head{padding:9mm 13mm}#wlq .wl-page{display:none!important}#wlq #wl-result{display:block!important}
+  #wlq .wl-rh{padding:9mm 13mm}#wlq .wl-results{padding:7mm 13mm}#wlq .wl-actions,#wlq .wl-foot{display:none}
+  #wlq .wl-grid{gap:5mm}#wlq .wl-card,#wlq .wl-cta{break-inside:avoid}#wlq .wl-rh h2{font-size:25px}
+}
+</style>
+
+<div id="wlq"><div class="wl-app"><div class="wl-shell">
+<div class="wl-head"><img class="wl-logo" src="URL_DEL_LOGO" alt="Wit Lab Capacitación"><div class="wl-ey">Laboratorio de RRHH</div></div>
+
+<section id="wl-intro" class="wl-page wl-on"><div class="wl-intro">
+<div class="wl-ey">Chequeo de método · 8–10 minutos</div>
+<h1>¿Tu plan de capacitación nace de un <span>método</span> o de los pedidos que van llegando?</h1>
+<p class="wl-lead">Vas a recorrer situaciones reales del área de RRHH: un gerente que pide un curso, el cierre del año, prioridades que compiten por presupuesto y la necesidad de mostrar resultados. Elegí qué harías hoy — no qué sería ideal hacer.</p>
+<div class="wl-pills"><span class="wl-pill">12 situaciones concretas</span><span class="wl-pill">4 momentos del proceso</span><span class="wl-pill">Devolución accionable</span></div>
+<button type="button" class="wl-btn wl-primary" id="wl-start">Empezar el chequeo →</button>
+<p class="wl-micro" style="margin-top:16px">No es un examen de conocimientos. Es una autoevaluación de las prácticas y herramientas que hoy tenés disponibles.</p>
+</div></section>
+
+<section id="wl-quiz" class="wl-page"><div class="wl-quiz">
+<div class="wl-topline"><span id="wl-stage"></span><span id="wl-count"></span></div><div class="wl-track"><div id="wl-fill" class="wl-fill"></div></div>
+<div class="wl-scene" id="wl-scene"></div><h2 class="wl-q" id="wl-question"></h2><div class="wl-context" id="wl-context"></div><div class="wl-opts" id="wl-opts"></div>
+<div class="wl-nav"><button type="button" class="wl-btn wl-ghost" id="wl-back">← Volver</button><span class="wl-micro">Respondé según lo que realmente ocurre hoy.</span></div>
+</div></section>
+
+<section id="wl-profile" class="wl-page"><div class="wl-profile">
+<div class="wl-ey">Contexto de tu organización</div><h2>Ahora, pongamos tu resultado en contexto.</h2>
+<p>Estas preguntas no modifican tu puntaje. Nos permiten entender tu realidad y, si elegís conversar con Wit Lab, llegar al segundo contacto con información útil.</p>
+<form id="wl-profileForm"><div class="wl-formgrid">
+<div class="wl-field"><label>Empresa *</label><input id="wl-company" required></div>
+<div class="wl-field"><label>Tu rol *</label><select id="wl-role" required><option value="">Seleccionar</option><option>Responsable / Gerencia de RRHH</option><option>Analista / Generalista de RRHH</option><option>Capacitación / Desarrollo</option><option>Dirección / Dueño</option><option>Otro</option></select></div>
+<div class="wl-field"><label>Rubro *</label><select id="wl-sector" required><option value="">Seleccionar</option><option>Industria / Manufactura</option><option>Minería / Energía</option><option>Agro / Vitivinicultura</option><option>Comercio / Retail</option><option>Servicios</option><option>Tecnología</option><option>Salud</option><option>Educación</option><option>Construcción</option><option>Logística / Transporte</option><option>Turismo / Gastronomía</option><option>Sector público</option><option>Otro</option></select></div>
+<div class="wl-field"><label>Cantidad de personas *</label><select id="wl-size" required><option value="">Seleccionar</option><option>1–20</option><option>21–50</option><option>51–100</option><option>101–250</option><option>251–500</option><option>Más de 500</option></select></div>
+<div class="wl-field wl-full"><label>En los últimos 24 meses, ¿qué capacitaciones realizaron? *</label><div class="wl-checks" id="wl-types"><label class="wl-check"><input type="checkbox" value="Técnicas"> Técnicas / del puesto</label><label class="wl-check"><input type="checkbox" value="Habilidades blandas"> Habilidades blandas</label><label class="wl-check"><input type="checkbox" value="Liderazgo"> Liderazgo / mandos medios</label><label class="wl-check"><input type="checkbox" value="Inducción, compliance o seguridad"> Inducción / compliance / seguridad</label><label class="wl-check"><input type="checkbox" value="No realizaron"> No realizamos capacitaciones</label><label class="wl-check"><input type="checkbox" value="Otras"> Otras</label></div></div>
+<div class="wl-field"><label>¿Qué resultados pudieron observar? *</label><select id="wl-pastResults" required><option value="">Seleccionar</option><option>No los medimos</option><option>Asistencia / satisfacción</option><option>Aprendizaje / conocimientos</option><option>Cambios en el puesto / conductas</option><option>Impacto en indicadores</option><option>No aplica</option></select></div>
+<div class="wl-field"><label>¿Tienen Plan Anual de Capacitación? *</label><select id="wl-annualPlan" required><option value="">Seleccionar</option><option>No</option><option>Acciones, pero no un plan formal</option><option>Sí, basado principalmente en pedidos</option><option>Sí, con diagnóstico, prioridades, cronograma y presupuesto</option><option>Sí, y además medimos resultados</option></select></div>
+<div class="wl-field wl-full"><label>¿Cuál es hoy el principal desafío de capacitación o desarrollo?</label><textarea id="wl-challenge" maxlength="500" placeholder="Ej.: priorizar necesidades, desarrollar mandos medios, justificar presupuesto, medir resultados..."></textarea></div>
+<div class="wl-field"><label>Nombre y apellido</label><input id="wl-person"></div><div class="wl-field"><label>Email o teléfono</label><input id="wl-contact"></div>
+<div class="wl-field wl-full"><label class="wl-check"><input type="checkbox" id="wl-followup"> Me interesa que Wit Lab me contacte para conversar sobre este diagnóstico.</label><div class="wl-micro">Los datos de contexto no modifican tu resultado. El contacto comercial sólo se habilita si marcás esta opción.</div><div id="wl-perr" class="wl-err"></div></div>
+</div><div class="wl-nav"><button type="button" class="wl-btn wl-ghost" id="wl-pback">← Volver</button><button class="wl-btn wl-primary" type="submit">Ver mi resultado →</button></div></form>
+</div></section>
+
+<section id="wl-result" class="wl-page">
+<div class="wl-rh"><div class="wl-ey">Tu mapa de trabajo actual</div><h2 id="wl-title"></h2><p id="wl-desc"></p></div>
+<div class="wl-results"><span class="wl-status" id="wl-badge"></span><p class="wl-summary" id="wl-summary"></p>
+<div class="wl-grid"><div class="wl-card"><h3>¿Dónde está más sólido tu proceso?</h3><div id="wl-bars"></div></div>
+<div class="wl-card"><h3>Lo que conviene ordenar primero</h3><div id="wl-calls"></div></div></div>
+<div class="wl-cta"><h3>Un buen plan no empieza por el catálogo de cursos.</h3><p>Empieza por entender qué necesita el negocio, qué brechas explican el desempeño, qué vale la pena priorizar y cómo convertirlo en un plan con objetivos, responsables, presupuesto e indicadores. Ese es el trabajo del Laboratorio de RRHH.</p></div>
+<div class="wl-commercial" id="wl-commercial"></div><div class="wl-actions"><button type="button" class="wl-btn wl-primary" id="wl-pdf">Guardar resultado en PDF</button><button type="button" class="wl-btn wl-ghost" id="wl-again">Rehacer chequeo</button></div>
+<p class="wl-micro">Resultado orientativo. Describe el grado de estructuración de las prácticas relevadas; no es una prueba psicométrica ni un benchmark frente a otras organizaciones.</p>
+</div></section>
+<div class="wl-foot">WIT LAB CAPACITACIÓN · Innovamos hoy. Transformamos mañana.</div>
+</div></div></div>
+
+<script>
+(function(){
+var root=document.getElementById("wlq");if(!root)return;
+function $(x){return document.getElementById("wl-"+x)}
+var stages=[
+{name:"1 · Leer el negocio",items:[
+{scene:"Situación 01 · Arranca la planificación anual",q:"Dirección comparte los objetivos del próximo año. ¿Qué pasa después en RRHH?",ctx:"Por ejemplo: crecer, mejorar productividad, abrir una unidad, reducir errores o profesionalizar mandos.",a:["Esperamos que aparezcan pedidos de capacitación durante el año.","Preguntamos a los líderes qué cursos creen que necesitarán.","Traducimos los objetivos en capacidades y comportamientos que los equipos deberán fortalecer.","Además de traducirlos en capacidades, dejamos registradas prioridades y evidencias para revisarlas durante el año."]},
+{scene:"Situación 02 · Un área pide capacitación",q:"Un gerente te dice: “Necesito un curso de liderazgo para mis supervisores”. ¿Cuál es tu siguiente paso?",ctx:"El pedido ya viene con una solución propuesta.",a:["Busco opciones y cotizaciones para responder al pedido.","Pregunto qué temas quiere incluir y cuántas personas participarían.","Indago qué situaciones o resultados originan el pedido antes de definir la solución.","Analizo el problema, evidencias y causas con el área para determinar si formación es realmente la intervención adecuada."]},
+{scene:"Situación 03 · El negocio cambia",q:"La empresa incorpora tecnología o modifica un proceso clave. ¿Cómo entra eso en tu planificación?",ctx:"Pensá en cambios que alteran roles, tareas o formas de trabajar.",a:["Lo abordamos cuando aparecen dificultades.","Consultamos si alguien necesita capacitación.","Identificamos qué roles cambian y qué nuevas capacidades requieren.","Anticipamos brechas, poblaciones afectadas y acciones de aprendizaje antes de la implementación."]}
+]},
+{name:"2 · Detectar la brecha real",items:[
+{scene:"Situación 04 · Aparecen errores repetidos",q:"Un equipo repite errores operativos. ¿Cómo decidís si necesita capacitación?",ctx:"Un error puede deberse a falta de habilidad, pero también a procesos, herramientas, incentivos o claridad de rol.",a:["Si el error se repite, programamos capacitación.","Consultamos al jefe qué tema convendría reforzar.","Buscamos evidencia sobre qué deberían hacer y qué hacen hoy.","Contrastamos desempeño esperado vs. actual y revisamos causas antes de decidir si la brecha es formativa."]},
+{scene:"Situación 05 · Relevamiento anual",q:"Cuando necesitás detectar necesidades de formación, ¿con qué información trabajás realmente?",ctx:"No pienses en lo que podrías consultar, sino en las fuentes que efectivamente usás.",a:["Principalmente pedidos que llegan a RRHH.","Una encuesta o consulta anual a líderes.","Combinamos dos o más fuentes: líderes, desempeño, encuestas, indicadores, entrevistas u observación.","Tenemos fuentes definidas por población y contrastamos la información antes de priorizar."]},
+{scene:"Situación 06 · Muchas necesidades, poco presupuesto",q:"Recibiste 15 necesidades y el presupuesto alcanza para pocas. ¿Cómo elegís?",ctx:"La priorización es parte del diagnóstico, no una etapa administrativa posterior.",a:["Avanzamos con lo más urgente o lo que más solicitan.","Priorizamos junto con dirección según criterio general.","Usamos criterios como impacto, criticidad, población y urgencia.","Aplicamos criterios explícitos, documentamos la decisión y podemos justificar por qué unas iniciativas avanzan antes que otras."]}
+]},
+{name:"3 · Convertir diagnóstico en plan",items:[
+{scene:"Situación 07 · Tenés las prioridades",q:"Ya sabés qué necesidades son importantes. ¿Qué documento construís a partir de ahí?",ctx:"Pensá en el plan que efectivamente usarías para gestionar el año.",a:["Un listado de cursos o temas.","Un calendario tentativo de capacitaciones.","Un plan con necesidad, objetivo, población, acción y fecha.","Un plan integral con prioridad, objetivo, población, intervención, responsable, cronograma, presupuesto e indicador."]},
+{scene:"Situación 08 · Diseñar una intervención",q:"Para una brecha priorizada, ¿cómo decidís qué tipo de acción desarrollar?",ctx:"No toda necesidad requiere un curso tradicional.",a:["Elegimos el curso disponible que mejor encaje.","Definimos modalidad según tiempo y presupuesto.","Partimos del resultado esperado y elegimos la intervención más adecuada.","Además definimos condiciones de aplicación, responsables y cómo se acompañará la transferencia al puesto."]},
+{scene:"Situación 09 · Presentar presupuesto",q:"Dirección pregunta: “¿Por qué deberíamos invertir en estas capacitaciones?”. ¿Qué podés mostrar?",ctx:"La pregunta obliga a conectar formación con decisiones de negocio.",a:["El catálogo, contenidos y costos.","Las necesidades que solicitaron los líderes.","La relación entre necesidad detectada, objetivo y población priorizada.","La trazabilidad completa: desafío del negocio → brecha → intervención → inversión → resultado esperado e indicador."]}
+]},
+{name:"4 · Gestionar y aprender",items:[
+{scene:"Situación 10 · Antes de iniciar una capacitación",q:"¿Qué queda definido antes de que empiece?",ctx:"Pensá en una capacitación importante, no sólo en la logística.",a:["Fecha, proveedor y participantes.","También contenidos y encuesta de satisfacción.","Objetivo de aprendizaje y qué debería poder hacer distinto la persona.","Resultado esperado, evidencia de aprendizaje/aplicación y responsables de seguimiento."]},
+{scene:"Situación 11 · Un mes después",q:"Terminó una capacitación. ¿Cómo sabés si sirvió?",ctx:"La asistencia y la satisfacción aportan información, pero no muestran por sí solas transferencia al trabajo.",a:["Si hubo buena asistencia y comentarios positivos, la damos por cumplida.","Revisamos la encuesta de satisfacción.","Verificamos aprendizaje o consultamos cambios observados.","Contrastamos indicadores o conductas esperadas y revisamos con líderes si hubo aplicación al puesto."]},
+{scene:"Situación 12 · Cierre del año",q:"Cuando llega el momento de armar el plan del año siguiente, ¿qué hacés con lo aprendido este año?",ctx:"El cierre puede convertirse en información para la próxima planificación.",a:["Empezamos nuevamente con los pedidos del nuevo año.","Revisamos qué capacitaciones se hicieron y cuáles quedaron pendientes.","Analizamos resultados y usamos esa información para ajustar prioridades.","Cerramos el ciclo con resultados, aprendizajes, decisiones de continuidad y evidencia para fundamentar el nuevo plan."]}
+]}];
+var flat=[];stages.forEach(function(s,si){s.items.forEach(function(x){flat.push(Object.assign({},x,{si:si}))})});
+var ans=Array(flat.length).fill(null),i=0;
+function top(){var y=root.getBoundingClientRect().top+window.pageYOffset-80;if(root.getBoundingClientRect().top<0)window.scrollTo(0,y)}
+function page(x){root.querySelectorAll(".wl-page").forEach(function(e){e.classList.remove("wl-on")});$(x).classList.add("wl-on");top()}
+function render(){var x=flat[i],s=stages[x.si];$("stage").textContent=s.name;$("count").textContent=(i+1)+" / "+flat.length;$("fill").style.width=((i+1)/flat.length*100)+"%";$("scene").textContent=x.scene;$("question").textContent=x.q;$("context").textContent=x.ctx;$("opts").innerHTML="";
+x.a.forEach(function(t,v){var b=document.createElement("button");b.type="button";b.className="wl-opt"+(ans[i]===v?" wl-sel":"");b.innerHTML='<span class="wl-letter">'+String.fromCharCode(65+v)+'</span><span>'+t+'</span>';b.addEventListener("click",function(){ans[i]=v;if(i<flat.length-1){i++;render()}else page("profile")});$("opts").appendChild(b)})}
+function result(){var scores=stages.map(function(s,si){var vals=flat.map(function(x,j){return x.si===si?ans[j]:null}).filter(function(v){return v!==null});return{name:s.name.replace(/^\d · /,""),pct:Math.round(vals.reduce(function(a,b){return a+b},0)/(vals.length*3)*100)}});
+var total=Math.round(ans.reduce(function(a,b){return a+b},0)/(ans.length*3)*100),title,desc;
+if(total<35){title="Hoy predomina una gestión reactiva.";desc="Las decisiones de capacitación dependen principalmente de pedidos y situaciones que aparecen. El primer salto no es sumar cursos: es instalar un método de diagnóstico."}
+else if(total<60){title="Hay buenas prácticas, pero todavía no forman un sistema.";desc="Tu área ya hace parte del trabajo de diagnóstico y planificación. La oportunidad está en conectar esas prácticas para que el plan no dependa de personas, urgencias o criterios informales."}
+else if(total<80){title="Tu proceso está bastante estructurado.";desc="Existe una lógica clara para diagnosticar y planificar. Conviene revisar los puntos menos consistentes para ganar trazabilidad, capacidad de priorización y evidencia de resultados."}
+else{title="Tenés un método integrado de capacitación.";desc="El proceso conecta negocio, brechas, decisiones de formación, planificación y seguimiento. El desafío es sostener la disciplina y usar la evidencia para mejorar cada ciclo."}
+$("title").textContent=title;$("desc").textContent=desc;$("badge").textContent="Nivel de estructuración · "+total+"%";$("summary").textContent="Este resultado no mide cuánto sabés de RRHH. Muestra cuán disponible y consistente está hoy el método que usás para pasar de una necesidad del negocio a una decisión de formación y a un plan gestionable.";
+$("bars").innerHTML=scores.map(function(x){return '<div class="wl-row"><div class="wl-lab"><span>'+x.name+'</span><span>'+x.pct+'%</span></div><div class="wl-bar"><i style="width:'+x.pct+'%"></i></div></div>'}).join("");
+var lows=scores.slice().sort(function(a,b){return a.pct-b.pct}).slice(0,2),advice={"Leer el negocio":"Formalizá cómo traducís objetivos y cambios del negocio en capacidades requeridas.","Detectar la brecha real":"Definí fuentes de evidencia y un criterio para distinguir brechas formativas de otros problemas de desempeño.","Convertir diagnóstico en plan":"Usá una estructura única que conecte prioridad, objetivo, población, intervención, responsable, cronograma, presupuesto e indicador.","Gestionar y aprender":"Definí antes de cada acción qué evidencia mostrará aprendizaje, aplicación y resultado."};
+$("calls").innerHTML=lows.map(function(x,k){return '<div class="wl-call"><strong>'+(k===0?"Prioridad 1":"Prioridad 2")+' · '+x.name+'</strong>'+advice[x.name]+'</div>'}).join("");page("result")}
+function pdata(){return{company:$("company").value.trim(),role:$("role").value,sector:$("sector").value,size:$("size").value,types:[].slice.call(root.querySelectorAll("#wl-types input:checked")).map(function(x){return x.value}),past:$("pastResults").value,plan:$("annualPlan").value,challenge:$("challenge").value.trim(),person:$("person").value.trim(),contact:$("contact").value.trim(),followup:$("followup").checked}}
+function safe(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+$("profileForm").addEventListener("submit",function(e){e.preventDefault();var d=pdata();if(!d.company||!d.role||!d.sector||!d.size||!d.past||!d.plan||!d.types.length){$("perr").textContent="Completá los campos obligatorios y seleccioná al menos un tipo de capacitación.";return}$("perr").textContent="";$("commercial").innerHTML="<strong>Contexto declarado</strong><br>"+safe(d.company)+" · "+safe(d.sector)+" · "+safe(d.size)+" personas<br><strong>Capacitación reciente:</strong> "+safe(d.types.join(", "))+"<br><strong>Resultados:</strong> "+safe(d.past)+" · <strong>Plan actual:</strong> "+safe(d.plan)+(d.challenge?"<br><strong>Desafío:</strong> "+safe(d.challenge):"");result()});
+$("pback").addEventListener("click",function(){i=flat.length-1;page("quiz");render()});
+$("start").addEventListener("click",function(){i=0;page("quiz");render()});
+$("back").addEventListener("click",function(){if(i){i--;render()}else page("intro")});
+$("again").addEventListener("click",function(){ans.fill(null);i=0;$("profileForm").reset();page("intro")});
+$("pdf").addEventListener("click",function(){window.print()});
+})();
+</script>
