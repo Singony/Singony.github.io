@@ -13,7 +13,7 @@
 -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-#wlq{--o:#F97316;--n:#111B45;--m:#68708a;--b:#e7e9f1;--bg:#f6f7fa;--p:#fff4ea;--g:#17845b;background:var(--bg);font-family:Montserrat,Arial,sans-serif;color:var(--n);text-align:left;line-height:1.4}
+#wlq{position:relative;--o:#F97316;--n:#111B45;--m:#68708a;--b:#e7e9f1;--bg:#f6f7fa;--p:#fff4ea;--g:#17845b;background:var(--bg);font-family:Montserrat,Arial,sans-serif;color:var(--n);text-align:left;line-height:1.4}
 #wlq *,#wlq *::before,#wlq *::after{box-sizing:border-box}
 #wlq h1,#wlq h2,#wlq h3,#wlq p{font-family:inherit;color:inherit;text-transform:none;letter-spacing:normal}
 #wlq .wl-app{max-width:850px;margin:auto;padding:24px 16px 50px}
@@ -62,12 +62,28 @@
 #wlq .wl-field select{-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer;padding-right:44px;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23F97316' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px 18px}
 #wlq .wl-field select::-ms-expand{display:none}
 #wlq .wl-field select:hover,#wlq .wl-field select:focus,#wlq .wl-field input:not([type=checkbox]):focus,#wlq .wl-field textarea:focus{border-color:var(--o);outline:none}
+#wlq .wl-dd{position:relative}
+#wlq .wl-dd select{display:none!important}
+#wlq .wl-dd-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:52px;margin:0;border:1.5px solid #cfd3e0;border-radius:12px;padding:6px 6px 6px 14px;background:#fff;color:var(--n);font:500 15px/1.3 Montserrat,Arial,sans-serif;text-align:left;cursor:pointer;text-transform:none;letter-spacing:normal;box-shadow:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#wlq .wl-dd-btn:hover,#wlq .wl-dd-btn:focus,#wlq .wl-dd.wl-open .wl-dd-btn{border-color:var(--o);outline:none;background:#fff;color:var(--n)}
+#wlq .wl-dd-txt{flex:1;min-width:0}
+#wlq .wl-dd.wl-empty .wl-dd-txt{color:var(--m)}
+#wlq .wl-dd-arrow{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:var(--o);color:#fff;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+#wlq .wl-dd-arrow svg{width:18px;height:18px;transition:transform .2s}
+#wlq .wl-dd.wl-open .wl-dd-arrow svg{transform:rotate(180deg)}
+#wlq .wl-dd-list{display:none;margin-top:6px;border:1.5px solid var(--o);border-radius:12px;background:#fff;padding:6px;max-height:320px;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 10px 25px #111b4518}
+#wlq .wl-dd.wl-open .wl-dd-list{display:block}
+#wlq .wl-dd-opt{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:0;border:0;border-radius:0;padding:13px 12px;background:#fff;color:var(--n);font:500 15px/1.35 Montserrat,Arial,sans-serif;text-align:left;cursor:pointer;text-transform:none;letter-spacing:normal;box-shadow:none;white-space:normal;touch-action:manipulation}
+#wlq .wl-dd-opt+.wl-dd-opt{border-top:1px solid #f0f1f6}
+#wlq .wl-dd-opt:hover,#wlq .wl-dd-opt:focus{background:var(--p);color:var(--n);outline:none}
+#wlq .wl-dd-opt.wl-sel{background:var(--p);color:var(--n);font-weight:700}
+#wlq .wl-dd-opt.wl-sel::after{content:"✓";color:var(--o);font-weight:800}
 #wlq .wl-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 #wlq .wl-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #wlq .wl-check{border:1px solid var(--b);border-radius:10px;padding:10px;font-size:12px;font-weight:500}
 #wlq .wl-err{color:#b42318;font-size:12px;font-weight:700}
 #wlq .wl-commercial{margin-top:18px;border-top:1px solid var(--b);padding-top:14px;font-size:12px;line-height:1.6}
-@media(max-width:620px){#wlq .wl-intro,#wlq .wl-quiz,#wlq .wl-results,#wlq .wl-rh{padding-left:21px;padding-right:21px}#wlq h1{font-size:33px}#wlq .wl-q{font-size:21px}#wlq .wl-grid{grid-template-columns:1fr}#wlq .wl-head{padding:17px 20px}#wlq .wl-profile{padding:24px 21px}#wlq .wl-formgrid,#wlq .wl-checks{grid-template-columns:1fr}#wlq .wl-full{grid-column:auto}}
+@media(max-width:620px){#wlq .wl-intro,#wlq .wl-quiz,#wlq .wl-results,#wlq .wl-rh{padding-left:21px;padding-right:21px}#wlq h1{font-size:33px}#wlq .wl-q{font-size:21px}#wlq .wl-grid{grid-template-columns:1fr}#wlq .wl-head{padding:17px 20px}#wlq .wl-profile{padding:24px 21px}#wlq .wl-formgrid,#wlq .wl-checks{grid-template-columns:1fr}#wlq .wl-full{grid-column:auto}#wlq .wl-field input:not([type=checkbox]),#wlq .wl-field textarea{font-size:16px}#wlq .wl-dd-arrow{padding:8px;font-size:10px;gap:4px}}
 @media print{
   body *{visibility:hidden!important}
   #wlq,#wlq *{visibility:visible!important}
@@ -178,12 +194,30 @@ fd.append("Puntaje total",r.total+"%");fd.append("Nivel",r.nivel);r.etapas.forEa
 flat.forEach(function(x,j){fd.append("P"+(j<9?"0":"")+(j+1)+" "+x.q,ans[j]===null?"-":String.fromCharCode(65+ans[j])+") "+x.a[ans[j]])});
 fetch(MAIL_URL,{method:"POST",headers:{"Accept":"application/json"},body:fd}).catch(function(){})}catch(e){}}
 function pdata(){return{company:$("company").value.trim(),role:$("role").value,sector:$("sector").value,size:$("size").value,types:[].slice.call(root.querySelectorAll("#wl-types input:checked")).map(function(x){return x.value}),past:$("pastResults").value,plan:$("annualPlan").value,challenge:$("challenge").value.trim(),person:$("person").value.trim(),contact:$("contact").value.trim(),followup:$("followup").checked}}
+var CHEV='<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg>';
+var dds=[].slice.call(root.querySelectorAll(".wl-field select")).map(function(sel){
+var box=document.createElement("div");box.className="wl-dd wl-empty";sel.parentNode.insertBefore(box,sel);box.appendChild(sel);
+var btn=document.createElement("button");btn.type="button";btn.className="wl-dd-btn";btn.setAttribute("aria-haspopup","listbox");btn.setAttribute("aria-expanded","false");
+btn.innerHTML='<span class="wl-dd-txt"></span><span class="wl-dd-arrow">Opciones '+CHEV+'</span>';
+var list=document.createElement("div");list.className="wl-dd-list";list.setAttribute("role","listbox");box.insertBefore(btn,sel);box.insertBefore(list,sel);
+var opts=[].slice.call(sel.options).filter(function(o){return o.value!==""});
+opts.forEach(function(o){var b=document.createElement("button");b.type="button";b.className="wl-dd-opt";b.setAttribute("role","option");b.textContent=o.text;
+b.addEventListener("click",function(){sel.value=o.value;sync();close();btn.focus()});list.appendChild(b)});
+function open(){dds.forEach(function(d){if(d.box!==box)d.close()});box.classList.add("wl-open");btn.setAttribute("aria-expanded","true")}
+function close(){box.classList.remove("wl-open");btn.setAttribute("aria-expanded","false")}
+function sync(){var i=sel.selectedIndex,o=sel.options[i];box.classList.toggle("wl-empty",!sel.value);btn.firstChild.textContent=sel.value?o.text:"Seleccioná";
+[].forEach.call(list.children,function(b,k){b.classList.toggle("wl-sel",opts[k].value===sel.value)})}
+btn.addEventListener("click",function(){box.classList.contains("wl-open")?close():open()});
+box.addEventListener("keydown",function(e){if(e.key==="Escape"){close();btn.focus()}});
+sync();return{box:box,close:close,sync:sync}});
+document.addEventListener("click",function(e){dds.forEach(function(d){if(!d.box.contains(e.target))d.close()})});
+$("profileForm").noValidate=true;
 function safe(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 $("profileForm").addEventListener("submit",function(e){e.preventDefault();var d=pdata();if(!d.company||!d.role||!d.sector||!d.size||!d.past||!d.plan||!d.types.length){$("perr").textContent="Completá los campos obligatorios y seleccioná al menos un tipo de capacitación.";return}$("perr").textContent="";$("commercial").innerHTML="<strong>Contexto declarado</strong><br>"+safe(d.company)+" · "+safe(d.sector)+" · "+safe(d.size)+" personas<br><strong>Capacitación reciente:</strong> "+safe(d.types.join(", "))+"<br><strong>Resultados:</strong> "+safe(d.past)+" · <strong>Plan actual:</strong> "+safe(d.plan)+(d.challenge?"<br><strong>Desafío:</strong> "+safe(d.challenge):"");send(d,result())});
 $("pback").addEventListener("click",function(){i=flat.length-1;page("quiz");render()});
 $("start").addEventListener("click",function(){i=0;page("quiz");render()});
 $("back").addEventListener("click",function(){if(i){i--;render()}else page("intro")});
-$("again").addEventListener("click",function(){ans.fill(null);i=0;$("profileForm").reset();page("intro")});
+$("again").addEventListener("click",function(){ans.fill(null);i=0;$("profileForm").reset();dds.forEach(function(d){d.close();d.sync()});page("intro")});
 $("pdf").addEventListener("click",function(){window.print()});
 })();
 </script>
